@@ -1,0 +1,72 @@
+-- Create the database
+CREATE DATABASE donation_db;
+
+-- Use the database
+USE donation_db;
+
+INSERT INTO users (username, email, password_hash, is_admin, created_at)
+VALUES ('admin', 'admin@rudonor.com', '123', TRUE, NOW());
+-- Create users table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create posts table
+CREATE TABLE posts (
+    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Create comments table
+CREATE TABLE comments (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Create likes table
+CREATE TABLE likes (
+    like_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Create shares table
+CREATE TABLE shares (
+    share_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Create indexes
+CREATE INDEX idx_user_email ON users(email);
+CREATE INDEX idx_post_user ON posts(user_id);
+CREATE INDEX idx_comment_post_user ON comments(post_id, user_id);
+CREATE INDEX idx_like_post_user ON likes(post_id, user_id);
+CREATE INDEX idx_share_post_user ON shares(post_id, user_id);
+
+
+
+
+
+
+

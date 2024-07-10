@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Now</title>
+    <!-- Include necessary CSS files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+ 
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Donate Now</h1>
+        <form id="donationForm" method="POST" action="{{ url_for('donate') }}">
+            <input type="hidden" id="post_id" name="post_id" value="{{ post_id }}">
+            <input type="hidden" id="user_id" name="user_id" value="{{ user_id }}">
+            
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+            </div>
+            
+            <div class="payment-options">
+                <div class="payment-option" data-method="phonepe">
+                    <img src="{{ url_for('static', filename='img/phonepe.png') }}" alt="PhonePe">
+                    <span>PhonePe</span>
+                </div>
+                <div class="payment-option" data-method="paytm">
+                    <img src="{{ url_for('static', filename='img/paytm.png') }}" alt="Paytm">
+                    <span>Paytm</span>
+                </div>
+                <div class="payment-option" data-method="gpay">
+                    <img src="{{ url_for('static', filename='img/gpay.png') }}" alt="Google Pay">
+                    <span>Google Pay</span>
+                </div>
+                <div class="payment-option" data-method="credit_card">
+                    <img src="{{ url_for('static', filename='img/credit_card.png') }}" alt="Credit Card">
+                    <span>Credit Card</span>
+                </div>
+                <div class="payment-option" data-method="debit_card">
+                    <img src="{{ url_for('static', filename='img/debit_card.png') }}" alt="Debit Card">
+                    <span>Debit Card</span>
+                </div>
+            </div>
+            
+            <!-- Hidden field to store selected payment method -->
+            <input type="hidden" id="payment_method" name="payment_method">
+            
+            <button type="submit" class="btn btn-primary mt-3">Donate Now</button>
+        </form>
+    </div>
+
+    <!-- Include necessary JS files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.payment-option').click(function() {
+                // Highlight selected payment option (optional)
+                $('.payment-option').removeClass('selected');
+                $(this).addClass('selected');
+                
+                // Set selected payment method in hidden input field
+                var paymentMethod = $(this).data('method');
+                $('#payment_method').val(paymentMethod);
+            });
+        });
+    </script>
+</body>
+</html>

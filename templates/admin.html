@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Admin Panel</title>
+    
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Admin Panel</h1>
+            <nav class="nav">
+                <a href="/" class="nav__link">Home</a>
+            </nav>
+        </div>
+    </header>
+    <main class="main" style="background-color: black">
+        
+        <div class="container">
+            <section>
+                <h2>Create Post</h2>
+                <form action="{{ url_for('create_post') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                    <div class="form__group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="content">Content</label>
+                        <textarea id="content" name="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form__group">
+                        <label for="images">Images</label>
+                        <input type="file" id="images" name="images[]" multiple required>
+                    </div>
+                    <div class="form__group">
+                        <button type="submit">Create Post</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Donations Table Section -->
+            <section class="donations">
+                <h2>Donations</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Post Name</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Date and Time</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if donations %}
+                            {% for donation in donations %}
+                            <tr>
+                                <td>{{ donation.donor_username }}</td>
+                                <td>{{ donation.post_title }}</td>
+                                <td>₹{{ donation.amount }}</td>
+                                <td>{{ donation.payment_method }}</td>
+                                <td>{{ donation.created_at }}</td>
+                                <td>{{ donation.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">No donations found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Manage Posts Section -->
+            <section class="posts">
+                <h2>Manage Posts</h2>
+                {% if posts %}
+                    {% for post in posts %}
+                    <article class="post">
+                        <div class="post__header">
+                            <h2 class="post__title">{{ post.title }}</h2>
+                            <p class="post__author">By {{ post.username }}</p>
+                        </div>
+                        <div class="post__image">
+                            {% if post.images %}
+                                {% if post.images|length > 1 %}
+                                <div class="post-carousel">
+                                    {% for image in post.images %}
+                                    <div>
+                                        <img src="{{ url_for('static', filename='uploads/' + image.image_filename) }}" alt="Post Image">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% elif post.images|length == 1 %}
+                                <img src="{{ url_for('static', filename='uploads/' + post.images[0].image_filename) }}" alt="Post Image">
+                                {% endif %}
+                            {% else %}
+                                <p>No images available for this post.</p>
+                            {% endif %}
+                        </div>
+                            <div class="post__actions">
+                            <form action="{{ url_for('delete_post', post_id=post.post_id) }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                                <button type="submit" class="action__button"><i class="ri-delete-bin-line"></i> Delete</button>
+                            </form>
+                        </div>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <p>No posts found.</p>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+</body>
+<style>
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+    }
+    .posts {
+        margin-top: 30px;
+    }
+    .donations {
+        margin-top: 30px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        -webkit-text-fill-color: black;
+        background-color: #f2f2f2;
+    }
+
+    .post__actions {
+        margin-top: 10px;
+    }
+    .action__button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    .action__button i {
+        margin-right: 5px;
+    }
+</style>
+</html>

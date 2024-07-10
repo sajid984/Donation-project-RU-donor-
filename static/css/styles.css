@@ -1,0 +1,650 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 0%);
+  /*========== Font and typography ==========*/
+  --body-font: "Poppins", sans-serif;
+  --h1-font-size: 1.75rem;
+  --normal-font-size: 1rem;
+  --small-font-size: .813rem;
+  /*========== Font weight ==========*/
+  --font-medium: 500;
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body,
+input,
+button {
+  font-size: var(--normal-font-size);
+  font-family: var(--body-font);
+}
+
+
+body {
+  color: var(--white-color);
+  background: url('../img/bgimg.jpeg');
+  background-size: cover;
+  backdrop-filter: blur(20px); /* Adjust the blur level as needed */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  
+}
+
+
+
+input,
+button {
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+/* Header styles */
+.header {
+  position: relative;
+  padding: 5px;
+  border-radius: 50px;
+  text-align: center;
+  background: url('../img/rudonorhbg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 85vh;
+}
+
+
+.header h1 {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 40px;
+  color: #fff;
+  background-color: #00000071;
+  border-radius: 30px;
+ 
+}
+
+.header h3 {
+  position: absolute;
+  bottom: 5px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 10px;
+  color: #fff;
+  background-color: #00000071;
+  border-radius: 10px;
+}
+.nav {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  text-align: right;
+}
+
+.nav__link {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.nav__link:hover {
+  text-decoration: underline;
+
+
+
+}/*=============== HEADER ===============*/
+.header {
+  padding: 10px ;
+  border-radius: 17px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+}
+
+ 
+
+
+
+.nav {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.nav__link {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.nav__link:hover {
+  text-decoration: underline;
+}
+
+/*=============== MAIN ===============*/
+.main {
+  padding: 20px 0;
+}
+
+/*=============== POSTS ===============*/
+.posts {
+  display: grid;
+  gap: 20px;
+}
+
+.post {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.post__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post__header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.post__author {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.post__image {
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.post__image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #fff;
+  border-radius: 8px;
+}
+
+.post__content {
+  margin-bottom: 10px;
+}
+
+.post__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.action__button {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.action__button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.action__button i {
+  margin-right: 5px;
+}
+
+.post__comments {
+  margin-top: 10px;
+  color: #ccc;
+}
+
+.comment-form {
+  margin-top: 10px;
+  display: none;
+}
+
+.comment-form textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.comment-form button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+  background-color: #555;
+}
+
+.comments-box {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+
+.comments-list .comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.comments-list .comment__avatar {
+  margin-right: 10px;
+}
+
+.comments-list .comment__avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comments-list .comment__content {
+  flex-grow: 1;
+  background-color: #444;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.comments-list .comment__author {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comments-list .comment__text {
+  margin: 0;
+}
+
+.comment__date {
+  font-size: 12px;
+  color: #999;
+  margin-left: auto;
+}
+
+/* Add keyframe animation for slide down effect */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*=============== LOGIN ===============*/
+.login {
+  position: relative;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+}
+
+.login__img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.login__form {
+  position: relative;
+  background-color: hsla(0, 0%, 10%, 0.1);
+  border: 2px solid var(--white-color);
+  margin-inline: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.login__title {
+  text-align: center;
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-medium);
+  margin-bottom: 2rem;
+}
+
+.login__content,
+.login__box {
+  display: grid;
+}
+
+.login__content {
+  row-gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.login__box {
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  column-gap: 0.75rem;
+  border-bottom: 2px solid var(--white-color);
+}
+
+.login__icon,
+.login__eye {
+  font-size: 1.25rem;
+}
+
+.login__input {
+  width: 100%;
+  padding-block: 0.8rem;
+  background: none;
+  color: var(--white-color);
+  position: relative;
+  z-index: 1;
+}
+
+.login__box-input {
+  position: relative;
+}
+
+.login__label {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  font-weight: var(--font-medium);
+  transition: top 0.3s, font-size 0.3s;
+}
+
+.login__eye {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.login__box:nth-child(2) input {
+  padding-right: 1.8rem;
+}
+
+.login__check,
+.login__check-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login__check {
+  margin-bottom: 1.5rem;
+}
+
+.login__check-label,
+.login__forgot,
+.login__register {
+  font-size: var(--small-font-size);
+}
+
+.login__check-group {
+  column-gap: 0.5rem;
+}
+
+.login__check-input {
+  width: 16px;
+  height: 16px;
+}
+
+.login__forgot {
+  color: var(--white-color);
+}
+
+.login__forgot:hover {
+  text-decoration: underline;
+}
+
+.login__button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--white-color);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.login__register {
+  text-align: center;
+}
+
+.login__register a {
+  color: var(--white-color);
+  font-weight: var(--font-medium);
+}
+
+.login__register a:hover {
+  text-decoration: underline;
+}
+
+/* Input focus move up label */
+.login__input:focus + .login__label {
+  top: -12px;
+  font-size: var(--small-font-size);
+}
+
+/* Input focus sticky top label */
+.login__input:not(:placeholder-shown).login__input:not(:focus) + .login__label {
+  top: -12px;
+  font-size: var(--small-font-size);
+}
+
+/*=============== FLASH MESSAGES ===============*/
+.flash-messages {
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+
+.flash-danger {
+  background-color: #f44336; /* Red */
+}
+
+.flash-success {
+  background-color: #4CAF50; /* Green */
+}
+
+/*=============== FORM GROUP ===============*/
+.form__group {
+  margin-bottom: 15px;
+}
+
+.form__group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form__group input,
+.form__group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form__group button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form__group button:hover {
+  background-color: #555;
+}
+
+/*=============== PAYMENT OPTIONS ===============*/
+.payment-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.payment-option img {
+  width: 100px; /* Adjust the size of the payment method logos as needed */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.payment-option span {
+  font-size: 14px;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For medium devices */
+@media screen and (min-width: 576px) {
+  .login {
+    justify-content: center;
+  }
+
+  .login__form {
+    width: 432px;
+    padding: 4rem 3rem 3.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .login__title {
+    font-size: 2rem;
+  }
+}
+
+/* Adjust image container for multiple images */
+.post__image-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.post__image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Styles for slick image slider */
+.post-carousel {
+  width: 100%;
+  max-width: 600px; /* Adjust the maximum width as per your design */
+  margin: 0 auto; /* Center the carousel horizontally */
+}
+
+.post-carousel img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.slick-dots {
+  bottom: 10px;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  .nav {
+    text-align: center;
+  }
+
+  .nav__link {
+    display: inline-block;
+    margin: 5px 0;
+  }
+
+  .posts {
+    gap: 10px;
+  }
+
+  .post__actions {
+    flex-direction: column;
+  }
+
+  .action__button {
+    margin-bottom: 5px;
+  }
+}
+/* Highlight selected payment option */
+.payment-option.selected {
+  border: 2px solid #007bff; /* Example border color (you can customize) */
+  padding: 8px; /* Example padding */
+  background-color: #f0f0f0; /* Example background color */
+}
+
+/* Style for the selected payment method text */
+.payment-option.selected span {
+  font-weight: bold; /* Example: Make text bold */
+  color: #007bff; /* Example text color */
+}

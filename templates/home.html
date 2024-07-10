@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet"> <!-- Link to Google Font -->
+    <title>Donations made easy</title>
+</head>
+<body>
+    <header class="header">
+
+        <h1>~~ Ru Donor ~~</h1>
+        <h3> ~  Lets contribute to make the world beutiful ~  </h3>
+        <nav class="nav">
+            {% if session.get('user_id') %}
+            <span class="nav__user-info">
+                <i class="ri-user-3-fill" style="font-size: 24px; vertical-align: middle; margin-right: 5px;"></i>
+                <span style="color: #fff; margin-right: 10px;">Logged in as {{ session['username'] }}</span>
+                <a href="{{ url_for('logout') }}" class="nav__link">Logout</a>
+            </span>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="nav__link">Login</a>
+            <a href="{{ url_for('register') }}" class="nav__link">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="main">
+        <div class="container">
+            <section class="posts">
+                {% for post in posts %}
+                <article class="post">
+                    <div class="post__header">
+                        <h2 class="post__title">{{ post.title }}</h2>
+                        <p class="post__author">By {{ post.username }}</p>
+                    </div>
+                    <div class="post__image">
+                        {% if post.images %}
+                            {% if post.images|length > 1 %}
+                            <div class="post-carousel">
+                                {% for image in post.images %}
+                                <div>
+                                    <img src="{{ url_for('static', filename='uploads/' + image.image_filename) }}" alt="Post Image">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% elif post.images|length == 1 %}
+                            <img src="{{ url_for('static', filename='uploads/' + post.images[0].image_filename) }}" alt="Post Image">
+                            {% endif %}
+                        {% else %}
+                            <p>No images available for this post.</p>
+                        {% endif %}
+                    </div>
+                    <div class="post__content">
+                        <p>{{ post.content }}</p>
+                    </div>
+                    <div class="post__actions">
+                        {% if session.get('user_id') %}
+                        <div>
+                            <a href="{{ url_for('like_post', post_id=post.post_id, user_id=session['user_id']) }}" class="action__button"><i class="ri-heart-line"></i> Like</a>
+                            <span>{{ post.like_count }} likes</span>
+                        </div>
+                        <div>
+                            <a href="#" class="action__button comment-link"><i class="ri-chat-3-line"></i> Comment</a>
+                            <span>{{ post.comment_count }} comments</span>
+                        </div>
+                        <a href="{{ url_for('share_post', post_id=post.post_id, user_id=session['user_id']) }}" class="action__button"><i class="ri-share-line"></i> Share</a>
+                        <a href="{{ url_for('help_now', post_id=post.post_id, user_id=session['user_id']) }}" class="action__button"><i class="ri-hand-heart-line"></i> Help Now</a>
+                        {% else %}
+                        <div>
+                            <a href="{{ url_for('login') }}" class="action__button"><i class="ri-heart-line"></i> Like</a>
+                            <span>{{ post.like_count }} likes</span>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('login') }}" class="action__button"><i class="ri-chat-3-line"></i> Comment</a>
+                            <span>{{ post.comment_count }} comments</span>
+                        </div>
+                        <a href="{{ url_for('login') }}" class="action__button"><i class="ri-share-line"></i> Share</a>
+                        <a href="{{ url_for('login') }}" class="action__button"><i class="ri-hand-heart-line"></i> Help Now</a>
+                        {% endif %}
+                    </div>
+                    <div class="post__comments">
+                        <div class="comments-box" id="comments-{{ post.post_id }}" style="display: none;">
+                            <div class="comments-list">
+                                <!-- Comments will be dynamically loaded here -->
+                            </div>
+                            <a href="#" class="show-all-comments" style="display: none;">Show All Comments</a>
+                            {% if session.get('user_id') %}
+                            <form class="comment-form" action="{{ url_for('comment_post', post_id=post.post_id, user_id=session['user_id']) }}" method="POST">
+                                <textarea name="comment_text" placeholder="Write a comment..."></textarea>
+                                <button type="submit">Post Comment</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if post.total_donations %}
+                    <div class="post__donations">
+                        <p class="donation__info" style="font-size: 1.0em;
+                        font-weight: bold;
+                        color: var(--white-color);
+                        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+                        padding: 10px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        margin-top: 10px;
+                        text-align: center">Total donations received <span class="amount" style="color:green">₹ {{ post.total_donations }}</span> for {{ post.title }}</p>
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('.post-carousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
+
+            const commentLinks = document.querySelectorAll('.comment-link');
+            commentLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const postId = this.closest('.post').querySelector('.comments-box').id.split('-')[1];
+                    const commentsBox = document.getElementById(`comments-${postId}`);
+                    const commentsList = commentsBox.querySelector('.comments-list');
+                    const showAllBtn = commentsBox.querySelector('.show-all-comments');
+                    const commentForm = commentsBox.querySelector('.comment-form');
+
+                    if (commentsBox.style.display === 'none') {
+                        fetchComments(postId, commentsList, showAllBtn);
+                        commentsBox.style.display = 'block';
+                        commentForm.style.display = 'block';
+                    } else {
+                        commentsBox.style.display = 'none';
+                    }
+                });
+            });
+
+            const posts = document.querySelectorAll('.post');
+            posts.forEach(post => {
+                const totalDonations = post.querySelector('.post__donations');
+                if (totalDonations) {
+                    post.classList.add('donated');
+                }
+            });
+        });
+
+        function fetchComments(postId, commentsList, showAllBtn) {
+            fetch(`/comments/${postId}`)
+                .then(response => response.json())
+                .then(comments => {
+                    commentsList.innerHTML = '';
+                    if (comments.length > 3) {
+                        showAllBtn.style.display = 'block';
+                    } else {
+                        showAllBtn.style.display = 'none';
+                    }
+                    comments.slice(0, 3).forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.classList.add('comment');
+                        commentDiv.innerHTML = `
+                            <p><strong>${comment.username}:</strong> ${comment.content}</p>
+                        `;
+                        commentsList.appendChild(commentDiv);
+                    });
+
+                    showAllBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        commentsList.innerHTML = '';
+                        comments.forEach(comment => {
+                            const commentDiv = document.createElement('div');
+                            commentDiv.classList.add('comment');
+                            commentDiv.innerHTML = `
+                                <p><strong>${comment.username}:</strong> ${comment.content}</p>
+                            `;
+                            commentsList.appendChild(commentDiv);
+                        });
+                        showAllBtn.style.display = 'none';
+                    });
+                })
+                .catch(error => console.error('Error fetching comments:', error));
+        }
+    </script>
+</body>
+</html>
